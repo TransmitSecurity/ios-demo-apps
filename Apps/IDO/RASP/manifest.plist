@@ -19,11 +19,11 @@
 				<key>bundle-identifier</key>
 				<string>com.TransmitSecurity.ido-ios-rasp-demo-app</string>
 				<key>bundle-version</key>
-				<string>2.0</string>
+				<string>1.0.1</string>
 				<key>kind</key>
 				<string>software</string>
 				<key>title</key>
-				<string>IDO RASP demo</string>
+				<string>RASP demo</string>
 			</dict>
 		</dict>
 	</array>
