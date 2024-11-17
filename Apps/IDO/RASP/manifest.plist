@@ -25,7 +25,7 @@
 				<key>title</key>
 				<string>RASP demo</string>
                                 <key>description</key>
-                                <string>Test Description</string>
+                                <string>Showcases the capabilities of Runtime Application Self-Protection (RASP) for iOS applications.</string>
 			</dict>
 		</dict>
 	</array>
