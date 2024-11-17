@@ -132,7 +132,7 @@
     <div class="app-container">
         <div class="app-header">
             <span class="app-title">IDO RASP Demo App</span>
-            <span class="app-version">Version: 1.0.0</span>
+            <span id="ido-version" class="app-version">Version: 1.0.0</span>
         </div>
         <p class="app-description">Showcases the capabilities of Runtime Application Self-Protection (RASP) for iOS applications.</p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/IDO/RASP/manifest.plist" class="download-button">Install App</a>
@@ -144,7 +144,7 @@
     <div class="app-container">
         <div class="app-header">
             <span class="app-title">IDV Demo App</span>
-            <span class="app-version">Version: 1.0.0</span>
+            <span id="idv-version" class="app-version">Version: 1.0.0</span>
         </div>
         <p class="app-description">Showcases the capabilities of IDV SDK.</p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/IDV/manifest.plist" class="download-button">Install App</a>
@@ -156,7 +156,7 @@
     <div class="app-container">
         <div class="app-header">
             <span class="app-title">DRS Demo App</span>
-            <span class="app-version">Version: 1.0.0</span>
+            <span id="drs-version" class="app-version">Version: 1.0.0</span>
         </div>
         <p class="app-description">Showcases the capabilities of DRS SDK.</p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/DRS/manifest.plist" class="download-button">Install App</a>
@@ -168,7 +168,7 @@
     <div class="app-container">
         <div class="app-header">
             <span class="app-title">Authentication Demo App</span>
-            <span class="app-version">Version: 1.0.0</span>
+            <span id="authentication-version" class="app-version">Version: 1.0.0</span>
         </div>
         <p class="app-description">Showcases the capabilities of Authentication SDK.</p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/Authentication/manifest.plist" class="download-button">Install App</a>
@@ -188,5 +188,55 @@
     }
 </script>
 
+<!-- JavaScript Code -->
+<script>
+    // Function to extract the bundle version from the manifest file and update the HTML
+    function updateAppVersion(manifestUrl, versionElementId) {
+        fetch(manifestUrl)
+            .then(response => {
+                if (!response.ok) {
+                    console.error(`Failed to fetch manifest: ${manifestUrl}`);
+                    return;
+                }
+                return response.text();
+            })
+            .then(xmlText => {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+
+                // Find the <key>bundle-version</key> value
+                const keys = xmlDoc.getElementsByTagName("key");
+                let version = "Unknown";
+
+                for (let i = 0; i < keys.length; i++) {
+                    if (keys[i].textContent === "bundle-version") {
+                        const versionNode = keys[i].nextElementSibling;
+                        if (versionNode && versionNode.tagName === "string") {
+                            version = versionNode.textContent;
+                        }
+                        break;
+                    }
+                }
+
+                // Update the HTML element with the extracted version
+                const versionElement = document.getElementById(versionElementId);
+                if (versionElement) {
+                    versionElement.textContent = `Version: ${version}`;
+                }
+            })
+            .catch(error => {
+                console.error(`Error parsing manifest XML: ${error}`);
+            });
+    }
+
+    // Call the updateAppVersion function for each app after the page has loaded
+    document.addEventListener("DOMContentLoaded", () => {
+        updateAppVersion("https://transmitsecurity.github.io/ios-demo-apps/Apps/IDO/RASP/manifest.plist", "ido-version");
+        updateAppVersion("https://transmitsecurity.github.io/ios-demo-apps/Apps/IDV/manifest.plist", "idv-version");
+        updateAppVersion("https://transmitsecurity.github.io/ios-demo-apps/Apps/DRS/manifest.plist", "drs-version");
+        updateAppVersion("https://transmitsecurity.github.io/ios-demo-apps/Apps/Authentication/manifest.plist", "authentication-version");
+    });
+</script>
+    
 </body>
 </html>
