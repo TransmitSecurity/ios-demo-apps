@@ -139,7 +139,7 @@
     </div>
 </div>
 
-<!-- IDV Tab Content -->
+<!-- IDV Tab Content 
 <div id="idv" class="tab-content">
     <div class="app-container">
         <div class="app-header">
@@ -149,9 +149,9 @@
         <p id="idv-description" class="app-description"></p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/IDV/manifest.plist" class="download-button">Install App</a>
     </div>
-</div>
+</div> -->
 
-<!-- DRS Tab Content -->
+<!-- DRS Tab Content 
 <div id="drs" class="tab-content">
     <div class="app-container">
         <div class="app-header">
@@ -161,9 +161,9 @@
         <p id="drs-description" class="app-description"></p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/DRS/manifest.plist" class="download-button">Install App</a>
     </div>
-</div>
+</div> -->
 
-<!-- Authentication Tab Content -->
+<!-- Authentication Tab Content 
 <div id="authentication" class="tab-content">
     <div class="app-container">
         <div class="app-header">
@@ -173,7 +173,7 @@
         <p id="authentication-description" class="app-description"></p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/Authentication/manifest.plist" class="download-button">Install App</a>
     </div>
-</div>
+</div> -->
 
 <script>
     function openTab(event, tabName) {
@@ -205,8 +205,9 @@
                 const xmlDoc = parser.parseFromString(xmlText, "application/xml");
 
                 // Initialize version and title
-                let version = "Unknown";
-                let title = "Unknown";
+                let version = "--";
+                let title = "--";
+                let description = "";
 
                 // Extract bundle-version
                 const keys = xmlDoc.getElementsByTagName("key");
