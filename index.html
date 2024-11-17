@@ -131,10 +131,10 @@
 <div id="ido" class="tab-content active">
     <div class="app-container">
         <div class="app-header">
-            <span id="ido-title" class="app-title">IDO RASP Demo App</span>
+            <span id="ido-title" class="app-title">--</span>
             <span id="ido-version" class="app-version">Version: --</span>
         </div>
-        <p class="app-description">Showcases the capabilities of Runtime Application Self-Protection (RASP) for iOS applications.</p>
+        <p id="ido-description" class="app-description"></p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/IDO/RASP/manifest.plist" class="download-button">Install App</a>
     </div>
 </div>
@@ -143,10 +143,10 @@
 <div id="idv" class="tab-content">
     <div class="app-container">
         <div class="app-header">
-            <span id="idv-title" class="app-title">IDV Demo App</span>
+            <span id="idv-title" class="app-title">--</span>
             <span id="idv-version" class="app-version">Version: --</span>
         </div>
-        <p class="app-description">Showcases the capabilities of IDV SDK.</p>
+        <p id="idv-description" class="app-description"></p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/IDV/manifest.plist" class="download-button">Install App</a>
     </div>
 </div>
@@ -155,10 +155,10 @@
 <div id="drs" class="tab-content">
     <div class="app-container">
         <div class="app-header">
-            <span id="drs-title" class="app-title">DRS Demo App</span>
+            <span id="drs-title" class="app-title">--</span>
             <span id="drs-version" class="app-version">Version: --</span>
         </div>
-        <p class="app-description">Showcases the capabilities of DRS SDK.</p>
+        <p id="drs-description" class="app-description"></p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/DRS/manifest.plist" class="download-button">Install App</a>
     </div>
 </div>
@@ -167,10 +167,10 @@
 <div id="authentication" class="tab-content">
     <div class="app-container">
         <div class="app-header">
-            <span class="app-title">Authentication Demo App</span>
+            <span class="app-title">--</span>
             <span id="authentication-title" id="authentication-version" class="app-version">Version: --</span>
         </div>
-        <p class="app-description">Showcases the capabilities of Authentication SDK.</p>
+        <p id="authentication-description" class="app-description"></p>
         <a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/Authentication/manifest.plist" class="download-button">Install App</a>
     </div>
 </div>
@@ -191,7 +191,7 @@
 <!-- JavaScript Code -->
 <script>
     // Function to extract the title and bundle version from the manifest file
-    function updateAppInfo(manifestUrl, versionElementId, titleElementId) {
+    function updateAppInfo(manifestUrl, versionElementId, titleElementId, descriptionElementId) {
         fetch(manifestUrl)
             .then(response => {
                 if (!response.ok) {
@@ -223,17 +223,27 @@
                             title = titleNode.textContent;
                         }
                     }
+                    if (keys[i].textContent === "description") {
+                        const descriptionNode = keys[i].nextElementSibling;
+                        if (descriptionNode && descriptionNode.tagName === "string") {
+                            description = descriptionNode.textContent;
+                        }
+                    }
                 }
 
                 // Update the HTML elements with the extracted title and version
                 const versionElement = document.getElementById(versionElementId);
                 const titleElement = document.getElementById(titleElementId);
+                const descriptionElement = document.getElementById(descriptionElementId)
 
                 if (versionElement) {
                     versionElement.textContent = `Version: ${version}`;
                 }
                 if (titleElement) {
                     titleElement.textContent = title;
+                }
+                if (descriptionElement) {
+                    descriptionElement.textContent = description;
                 }
             })
             .catch(error => {
@@ -246,22 +256,26 @@
         updateAppInfo(
             "https://transmitsecurity.github.io/ios-demo-apps/Apps/IDO/RASP/manifest.plist",
             "ido-version",
-            "ido-title"
+            "ido-title",
+            "ido-description"
         );
         updateAppInfo(
             "https://transmitsecurity.github.io/ios-demo-apps/Apps/IDV/manifest.plist",
             "idv-version",
-            "idv-title"
+            "idv-title",
+            "idv-description"
         );
         updateAppInfo(
             "https://transmitsecurity.github.io/ios-demo-apps/Apps/DRS/manifest.plist",
             "drs-version",
-            "drs-title"
+            "drs-title",
+            "drs-description"
         );
         updateAppInfo(
             "https://transmitsecurity.github.io/ios-demo-apps/Apps/Authentication/manifest.plist",
             "authentication-version",
-            "authentication-title"
+            "authentication-title",
+            "authentication-description"
         );
     });
 </script>
