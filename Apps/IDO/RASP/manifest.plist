@@ -24,6 +24,8 @@
 				<string>software</string>
 				<key>title</key>
 				<string>RASP demo</string>
+                                <key>description</key>
+                                <string>Test Description</string>
 			</dict>
 		</dict>
 	</array>
