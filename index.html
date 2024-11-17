@@ -190,8 +190,8 @@
 
 <!-- JavaScript Code -->
 <script>
-    // Function to extract the bundle version from the manifest file and update the HTML
-    function updateAppVersion(manifestUrl, versionElementId) {
+    // Function to extract the title and bundle version from the manifest file
+    function updateAppInfo(manifestUrl, versionElementId, titleElementId) {
         fetch(manifestUrl)
             .then(response => {
                 if (!response.ok) {
@@ -204,24 +204,36 @@
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(xmlText, "application/xml");
 
-                // Find the <key>bundle-version</key> value
-                const keys = xmlDoc.getElementsByTagName("key");
+                // Initialize version and title
                 let version = "Unknown";
+                let title = "Unknown";
 
+                // Extract bundle-version
+                const keys = xmlDoc.getElementsByTagName("key");
                 for (let i = 0; i < keys.length; i++) {
                     if (keys[i].textContent === "bundle-version") {
                         const versionNode = keys[i].nextElementSibling;
                         if (versionNode && versionNode.tagName === "string") {
                             version = versionNode.textContent;
                         }
-                        break;
+                    }
+                    if (keys[i].textContent === "title") {
+                        const titleNode = keys[i].nextElementSibling;
+                        if (titleNode && titleNode.tagName === "string") {
+                            title = titleNode.textContent;
+                        }
                     }
                 }
 
-                // Update the HTML element with the extracted version
+                // Update the HTML elements with the extracted title and version
                 const versionElement = document.getElementById(versionElementId);
+                const titleElement = document.getElementById(titleElementId);
+
                 if (versionElement) {
                     versionElement.textContent = `Version: ${version}`;
+                }
+                if (titleElement) {
+                    titleElement.textContent = title;
                 }
             })
             .catch(error => {
@@ -229,12 +241,28 @@
             });
     }
 
-    // Call the updateAppVersion function for each app after the page has loaded
+    // Call the function for each app manifest
     document.addEventListener("DOMContentLoaded", () => {
-        updateAppVersion("https://transmitsecurity.github.io/ios-demo-apps/Apps/IDO/RASP/manifest.plist", "ido-version");
-        updateAppVersion("https://transmitsecurity.github.io/ios-demo-apps/Apps/IDV/manifest.plist", "idv-version");
-        updateAppVersion("https://transmitsecurity.github.io/ios-demo-apps/Apps/DRS/manifest.plist", "drs-version");
-        updateAppVersion("https://transmitsecurity.github.io/ios-demo-apps/Apps/Authentication/manifest.plist", "authentication-version");
+        updateAppInfo(
+            "https://transmitsecurity.github.io/ios-demo-apps/Apps/IDO/RASP/manifest.plist",
+            "ido-version",
+            "ido-title"
+        );
+        updateAppInfo(
+            "https://transmitsecurity.github.io/ios-demo-apps/Apps/IDV/manifest.plist",
+            "idv-version",
+            "idv-title"
+        );
+        updateAppInfo(
+            "https://transmitsecurity.github.io/ios-demo-apps/Apps/DRS/manifest.plist",
+            "drs-version",
+            "drs-title"
+        );
+        updateAppInfo(
+            "https://transmitsecurity.github.io/ios-demo-apps/Apps/Authentication/manifest.plist",
+            "authentication-version",
+            "authentication-title"
+        );
     });
 </script>
     
