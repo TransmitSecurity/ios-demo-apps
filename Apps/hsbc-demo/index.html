@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDO RASP Demo App</title>
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        max-width: 500px;
+        margin: auto;
+        height: 100vh;
+    }
+
+    .logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 20px;
+    }
+
+    .app-title {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #007aff;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .app-subtitle {
+        font-size: 1em;
+        color: #666;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .app-version {
+        color: #333;
+        font-size: 0.9em;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .download-button {
+        display: inline-block;
+        padding: 12px 30px;
+        color: #ffffff;
+        background-color: #007aff;
+        font-weight: bold;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.2s;
+    }
+
+    .download-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<!-- App Logo -->
+<img src="https://transmitsecurity.github.io/ios-demo-apps/Assets/ido-rasp-logo.png" alt="IDO RASP Logo" class="logo">
+
+<!-- App Title -->
+<div class="app-title">IDO RASP Demo App</div>
+
+<!-- Optional Subtitle -->
+<div class="app-subtitle">Showcasing Runtime Application Self-Protection (RASP) capabilities for iOS.</div>
+
+<!-- Version -->
+<div id="app-version" class="app-version">Version: Loading...</div>
+
+<!-- Download Button -->
+<a href="itms-services://?action=download-manifest&amp;url=https://transmitsecurity.github.io/ios-demo-apps/Apps/IDO/RASP/manifest.plist" class="download-button">Install App</a>
+
+<!-- JavaScript to Fetch Version from Manifest -->
+<script>
+    function fetchAppVersion(manifestUrl, versionElementId) {
+        fetch(manifestUrl)
+            .then(response => {
+                if (!response.ok) {
+                    console.error(`Failed to fetch manifest: ${manifestUrl}`);
+                    return;
+                }
+                return response.text();
+            })
+            .then(xmlText => {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+
+                // Extract bundle-version
+                const keys = xmlDoc.getElementsByTagName("key");
+                let version = "Unknown";
+
+                for (let i = 0; i < keys.length; i++) {
+                    if (keys[i].textContent === "bundle-version") {
+                        const versionNode = keys[i].nextElementSibling;
+                        if (versionNode && versionNode.tagName === "string") {
+                            version = versionNode.textContent;
+                        }
+                        break;
+                    }
+                }
+
+                // Update the HTML element with the extracted version
+                const versionElement = document.getElementById(versionElementId);
+                if (versionElement) {
+                    versionElement.textContent = `Version: ${version}`;
+                }
+            })
+            .catch(error => {
+                console.error(`Error fetching or parsing manifest XML: ${error}`);
+            });
+    }
+
+    // Fetch the version when the page loads
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchAppVersion("https://transmitsecurity.github.io/ios-demo-apps/Apps/IDO/RASP/manifest.plist", "app-version");
+    });
+</script>
+
+</body>
+</html>
