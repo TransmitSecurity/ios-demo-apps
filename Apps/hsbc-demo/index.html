@@ -68,7 +68,7 @@
 <body>
 
 <!-- App Logo -->
-<img src="https://transmitsecurity.github.io/ios-demo-apps/Assets/ido-rasp-logo.png" alt="Logo" class="logo">
+<img id="app-logo" src="https://transmitsecurity.github.io/ios-demo-apps/Assets/ido-rasp-logo.png" alt="Logo" class="logo">
 
 <!-- App Title -->
 <div id="app-title" class="app-title">HSBC Demo</div>
@@ -102,6 +102,7 @@
                 let version = "--";
                 let title = "--";
                 let description = "";
+                let logoUrl = "";
 
                 for (let i = 0; i < keys.length; i++) {
                     if (keys[i].textContent === "bundle-version") {
@@ -124,6 +125,12 @@
                             description = descriptionNode.textContent;
                         }
                     }
+                    if (keys[i].textContent === "logo-url") {
+                        const logoNode = keys[i].nextElementSibling;
+                        if (logoNode && logoNode.tagName === "string") {
+                            logoUrl = logoNode.textContent;
+                        }
+                    }
                 }
 
                 // Update the HTML element with the extracted version
@@ -140,6 +147,11 @@
                 const descriptionElement = document.getElementById(descriptionElementId);
                 if (descriptionElement) {
                     descriptionElement.textContent = description;
+                }
+
+                const logoElement = document.getElementById(logoElementId);
+                if (logoElement && logoUrl) {
+                    logoElement.src = logoUrl;
                 }
             })
             .catch(error => {
