@@ -26,7 +26,7 @@
 				<string>HSBC demo</string>
 				<key>description</key>
 				<string>Demo app description (optional)</string>
-				<key>logo</key>
+				<key>logo-url</key>
 				<string></string>
 			</dict>
 		</dict>
