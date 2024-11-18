@@ -27,7 +27,7 @@
 				<key>description</key>
 				<string>Demo app description (optional)</string>
 				<key>logo-url</key>
-				<string></string>
+				<string>https://transmitsecurity.github.io/ios-demo-apps/Assets/transmit-logo.png</string>
 			</dict>
 		</dict>
 	</array>
